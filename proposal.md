@@ -1,4 +1,4 @@
-## Description
+## Description 
 
 Our project aims to develop a sudoku solver implemented in C++, with an exploration of different algorithms. The objective of Sudoku is to fill an **n** by **n** grid with digits from 1 to **n** such that each row, column, and subgrid contains exactly one occurence of each digit. There are constraints on valid values of **n** as this would change the formulation for the subsequent subgrids, but we will automatically generate the subgrids accordingly. There are a variety of known techniques for solving Sudoku found on https://en.wikipedia.org/wiki/Sudoku_solving_algorithms. Techniques include backtracking, stochastic search, constraint programming, exact cover, and relations and residuals. We plan to implement at least up to exact cover (relations and residuals time permitting).
 
