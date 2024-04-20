@@ -37,6 +37,7 @@ public:
     // get value at coord
     uint32_t get(std::pair<uint32_t, uint32_t> coord) const;
 
+    // check if the value can be placed at the given coord
     bool columnCheck(std::pair<uint32_t, uint32_t> coord, uint32_t value) const;
 
     bool rowCheck(std::pair<uint32_t, uint32_t> coord, uint32_t value) const;

@@ -6,8 +6,7 @@ Grid::Grid(uint32_t n)
     grid = std::vector<std::vector<uint32_t>>(n, std::vector<uint32_t>(n, 0));
 }
 
-Grid::Grid(std::vector<std::vector<uint32_t>> grid, uint32_t n)
-    : n(n)
+Grid::Grid(std::vector<std::vector<uint32_t>> grid, uint32_t n) : n(n)
 {
     setGrid(grid);
 }

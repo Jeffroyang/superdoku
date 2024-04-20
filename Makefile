@@ -1,7 +1,7 @@
 all: a.out
 
-a.out: grid.cpp 
-	g++-10 -g -Wall -Werror -std=c++20 grid.cpp
+a.out: sudoku.cpp
+	g++-10 -g -Wall -Werror -std=c++20 sudoku.cpp
 
 clean:
 	rm a.out
