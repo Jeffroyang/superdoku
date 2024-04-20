@@ -6,12 +6,12 @@
 
 class Solver
 {
-private:
+protected:
     std::unique_ptr<SudokuGame> game;
 
 public:
+    Solver();
     Solver(const std::string &filename);
-    Solver(std::unique_ptr<SudokuGame> game);
     Solver(Solver &&other);
 
     virtual void solve() = 0;

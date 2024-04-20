@@ -20,13 +20,10 @@ private:
     bool columnCheck(int col, char value) const;
 
     // check if the value can be placed in the given row
-    bool rowCheck(int row, int col, char value) const;
+    bool rowCheck(int row, char value) const;
 
     // check if the value can be placed in the given square
     bool squareCheck(int row, int col, char value) const;
-
-    // check if the value can be placed at the given coord
-    bool canPlace(int row, int col, char value) const;
 
 public:
     // create sudoku game given a file
@@ -39,11 +36,14 @@ public:
     // returns bool indicating whether the update was successful
     bool update(int row, int col, char value);
 
-    // get value at coord
-    char get(int row, int col) const;
+    // check if the value can be placed at the given coord
+    bool canPlace(int row, int col, char value) const;
 
     // check if the game is over
     bool gameOver() const;
+
+    // reads the value at the given row and column
+    const std::array<char, GRID_SIZE> &operator[](int row) const;
 
     bool operator==(const SudokuGame &grid) const;
 

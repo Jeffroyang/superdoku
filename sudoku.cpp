@@ -41,17 +41,12 @@ void SudokuGame::verifyCoords(int row, int col) const
 
 bool SudokuGame::update(int row, int col, char value)
 {
-    if (value != '.' || !canPlace(row, col, value))
+    if (!canPlace(row, col, value))
     {
         return false;
     }
     grid[row][col] = value;
     return true;
-}
-
-char SudokuGame::get(int row, int col) const
-{
-    return grid[row][col];
 }
 
 bool SudokuGame::columnCheck(int col, char value) const
@@ -60,7 +55,7 @@ bool SudokuGame::columnCheck(int col, char value) const
                         { return row[col] == value; }) == grid.end();
 }
 
-bool SudokuGame::rowCheck(int row, int col, char value) const
+bool SudokuGame::rowCheck(int row, char value) const
 {
     return std::find(grid[row].begin(), grid[row].end(), value) == grid[row].end();
 }
@@ -86,7 +81,12 @@ bool SudokuGame::squareCheck(int row, int col, char value) const
 bool SudokuGame::canPlace(int row, int col, char value) const
 {
     verifyCoords(row, col);
-    return grid[row][col] == '.' && columnCheck(col, value) && rowCheck(row, col, value) && squareCheck(row, col, value);
+    bool undoingMove = value == '.';
+
+    bool emptyCell = grid[row][col] == '.';
+    bool noConflicts = emptyCell && columnCheck(col, value) && rowCheck(row, value) && squareCheck(row, col, value);
+
+    return undoingMove || noConflicts;
 }
 
 bool SudokuGame::gameOver() const
@@ -119,6 +119,11 @@ bool SudokuGame::operator==(const SudokuGame &game) const
     return true;
 }
 
+const std::array<char, GRID_SIZE> &SudokuGame::operator[](int row) const
+{
+    return grid[row];
+}
+
 std::ostream &operator<<(std::ostream &out, SudokuGame game)
 {
     out << "+-------+-------+-------+\n";
@@ -140,11 +145,4 @@ std::ostream &operator<<(std::ostream &out, SudokuGame game)
         }
     }
     return out;
-}
-
-int main()
-{
-    SudokuGame game("sudoku.txt");
-    std::cout << game;
-    return 0;
 }
