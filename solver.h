@@ -14,7 +14,7 @@ public:
     Solver(const std::string &filename);
     Solver(Solver &&other);
 
-    virtual void solve() = 0;
+    virtual bool solve() = 0;
     virtual ~Solver();
 };
 

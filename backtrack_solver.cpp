@@ -8,21 +8,7 @@ public:
 
     BacktrackingSolver(const std::string &filename) : Solver(filename) {}
 
-    void solve() override
-    {
-        if (solveSudoku())
-        {
-            std::cout << "Sudoku puzzle solved successfully!" << std::endl;
-            std::cout << *game << std::endl;
-        }
-        else
-        {
-            std::cout << "No solution found for the given Sudoku puzzle." << std::endl;
-        }
-    }
-
-private:
-    bool solveSudoku()
+    bool solve() override
     {
         int row, col;
 
@@ -35,8 +21,10 @@ private:
             if (game->canPlace(row, col, num))
             {
                 game->update(row, col, num);
-                if (solveSudoku())
+                if (solve())
                 {
+                    std::cout << "Sudoku puzzle solved successfully!" << std::endl;
+                    std::cout << *game << std::endl;
                     return true;
                 }
 
@@ -47,6 +35,7 @@ private:
         return false;
     }
 
+private:
     bool findEmptyLocation(int &row, int &col) const
     {
         for (row = 0; row < GRID_SIZE; row++)
@@ -63,9 +52,18 @@ private:
     }
 };
 
-int main()
+int main(int argc, char *argv[])
 {
-    BacktrackingSolver solver("sudoku.txt");
-    solver.solve();
+    if (argc != 2)
+    {
+        std::cout << "Usage: " << argv[0] << " <sudoku filename>" << std::endl;
+    }
+
+    BacktrackingSolver solver(argv[1]);
+    if (!solver.solve())
+    {
+        std::cout << "No solution found!" << std::endl;
+    }
+
     return 0;
 }
