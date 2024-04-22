@@ -19,7 +19,7 @@ SudokuGame::SudokuGame(const std::string &filename)
             {
                 throw std::invalid_argument("Error reading value from file");
             }
-            file >> grid.at(row).at(col);
+            file >> grid[row][col];
         }
     }
 

@@ -1,11 +1,11 @@
 #ifndef __SUDOKU_HPP__
 #define __SUDOKU_HPP__
-#define GRID_SIZE 9
-
 #include <array>
 #include <cstdint>
 #include <string>
 #include <vector>
+
+#define GRID_SIZE 9
 
 class SudokuGame
 {
