@@ -14,7 +14,7 @@ private:
     std::array<std::array<char, GRID_SIZE>, GRID_SIZE> grid;
 
     // potentially get rid of this if we always have well-formed input
-    void verifyCoords(int row, int col) const;
+    void verifyArgs(int row, int col, char val) const;
 
     // check if the value can be placed in the given column
     bool columnCheck(int col, char value) const;

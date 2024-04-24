@@ -14,14 +14,12 @@ private:
         }
         for (char num = '1'; num <= '9'; num++)
         {
-            if (game->canPlace(row, col, num))
+            if (game->update(row, col, num))
             {
-                game->update(row, col, num);
                 if (solveHelper())
                 {
                     return true;
                 }
-
                 game->update(row, col, '.');
             }
         }

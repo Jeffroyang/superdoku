@@ -19,7 +19,12 @@ SudokuGame::SudokuGame(const std::string &filename)
             {
                 throw std::invalid_argument("Error reading value from file");
             }
-            file >> grid[row][col];
+            char val;
+            file >> val;
+            if (!update(row, col, val))
+            {
+                throw std::invalid_argument("Invalid initial grid");
+            }
         }
     }
 
@@ -28,19 +33,33 @@ SudokuGame::SudokuGame(const std::string &filename)
 
 SudokuGame::SudokuGame(const std::array<std::array<char, GRID_SIZE>, GRID_SIZE> &grid)
 {
-    this->grid = grid;
+    for (size_t row = 0; row < GRID_SIZE; row++)
+    {
+        for (size_t col = 0; col < GRID_SIZE; col++)
+        {
+            if (!update(row, col, grid[row][col]))
+            {
+                throw std::invalid_argument("Invalid initial grid");
+            }
+        }
+    }
 }
 
-void SudokuGame::verifyCoords(int row, int col) const
+void SudokuGame::verifyArgs(int row, int col, char val) const
 {
     if (row < 0 || row >= GRID_SIZE || col < 0 || col >= GRID_SIZE)
     {
         throw std::invalid_argument("Invalid row or column");
     }
+    if (val != '.' && (val < '1' || val > '9'))
+    {
+        throw std::invalid_argument("Invalid value");
+    }
 }
 
 bool SudokuGame::update(int row, int col, char value)
 {
+    verifyArgs(row, col, value);
     if (!canPlace(row, col, value))
     {
         return false;
@@ -80,7 +99,7 @@ bool SudokuGame::squareCheck(int row, int col, char value) const
 
 bool SudokuGame::canPlace(int row, int col, char value) const
 {
-    verifyCoords(row, col);
+    verifyArgs(row, col, value);
     bool undoingMove = value == '.';
 
     bool emptyCell = grid[row][col] == '.';
