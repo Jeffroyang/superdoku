@@ -13,7 +13,7 @@ private:
     // grid containing numbers '1' to '9' and empty cells '.'
     std::array<std::array<char, GRID_SIZE>, GRID_SIZE> grid;
 
-    // potentially get rid of this if we always have well-formed input
+    // verify that the row, column, and value are valid
     void verifyArgs(int row, int col, char val) const;
 
     // check if the value can be placed in the given column
@@ -25,6 +25,9 @@ private:
     // check if the value can be placed in the given square
     bool squareCheck(int row, int col, char value) const;
 
+    // check if the value can be placed at the given coord
+    bool canPlace(int row, int col, char value) const;
+
 public:
     // create sudoku game given a file
     SudokuGame(const std::string &filename);
@@ -35,9 +38,6 @@ public:
     // update grid with value at coord
     // returns bool indicating whether the update was successful
     bool update(int row, int col, char value);
-
-    // check if the value can be placed at the given coord
-    bool canPlace(int row, int col, char value) const;
 
     // check if the game is over
     bool gameOver() const;

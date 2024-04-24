@@ -6,7 +6,7 @@ ExactCover::Node::Node() : left(this), right(this), up(this), down(this), row(th
 {
 }
 
-ExactCover::ExactCover(size_t cols) : cols(cols), numRows(0), isSolved(false)
+ExactCover::ExactCover(size_t cols) : root(nullptr), nodes(), rows(), numRows(0), solution(), isSolved(false)
 {
 
     // add root node to the end of the nodes vector
@@ -29,6 +29,7 @@ ExactCover::ExactCover(size_t cols) : cols(cols), numRows(0), isSolved(false)
 
 void ExactCover::addRow(const std::vector<size_t> &subset)
 {
+    // setup row node
     nodes.emplace_back(new Node());
     auto rowStart = nodes.back();
     rowStart->rowNum = numRows++;
@@ -97,9 +98,9 @@ void ExactCover::cover(Node *column)
     column->right->left = column->left;
     column->left->right = column->right;
 
+    // cover all rows in the column
     for (auto row = column->down; row != column; row = row->down)
     {
-        // remove this particular row from each column
         for (auto node = row->right; node != row; node = node->right)
         {
             node->down->up = node->up;
@@ -111,6 +112,7 @@ void ExactCover::cover(Node *column)
 
 void ExactCover::uncover(Node *column)
 {
+    // uncover all rows in the column
     for (auto row = column->up; row != column; row = row->up)
     {
         for (auto node = row->left; node != row; node = node->left)
@@ -121,6 +123,7 @@ void ExactCover::uncover(Node *column)
         }
     }
 
+    // add column back to header list
     column->right->left = column;
     column->left->right = column;
 }
@@ -132,7 +135,6 @@ ExactCover::Node *ExactCover::findColumnWithLeastNodes()
 
     for (auto column = root->right; column != root; column = column->right)
     {
-        // std::cout << column->count << std::endl;
         if (column->count < min)
         {
             min = column->count;
@@ -200,25 +202,3 @@ ExactCover::~ExactCover()
         delete node;
     }
 }
-
-// int main()
-// {
-//     ExactCover ec(7);
-//     ec.addRow({1, 4, 7});
-//     ec.addRow({1, 4});
-//     ec.addRow({4, 5, 7});
-//     ec.addRow({3, 5, 6});
-//     ec.addRow({2, 3, 6, 7});
-//     ec.addRow({2, 7});
-//     ec.addRow({3, 4, 6});
-
-//     ec.initRows({1, 3});
-
-//     auto solution = ec.solve();
-
-//     for (const auto &row : solution)
-//     {
-//         std::cout << row << std::endl;
-//     }
-//     return 0;
-// }
