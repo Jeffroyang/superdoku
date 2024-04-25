@@ -13,6 +13,7 @@ public:
     Solver();
     Solver(const std::string &filename);
     Solver(Solver &&other);
+    Solver(const Solver &other);
 
     virtual void solve() = 0;
     virtual ~Solver();

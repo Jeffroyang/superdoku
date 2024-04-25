@@ -13,4 +13,9 @@ Solver::Solver(Solver &&other)
     game = std::move(other.game);
 }
 
+Solver::Solver(const Solver &other)
+{
+    game = std::make_unique<SudokuGame>(*other.game);
+}
+
 Solver::~Solver() = default;
