@@ -13,8 +13,13 @@ enum class SolverType
     EXACTCOVER
 };
 
-void testConstructors(const std::string &line)
+void testConstructors(const std::string &fileName)
 {
+    std::ifstream file(fileName);
+    std::string line;
+    std::getline(file, line);
+    file.close();
+
     ConstraintSolver solver1(line);
     std::cout << "Solver 1: Regular Constructor" << std::endl;
     std::cout << solver1.getGame() << std::endl;
@@ -42,10 +47,7 @@ void testConstructors(const std::string &line)
 
 int main(int argc, char *argv[])
 {
-    std::ifstream file(argv[1]);
-    std::string line;
-    std::getline(file, line);
-    testConstructors(line);
+    testConstructors(argv[1]);
 
     if (argc < 3 || argc > 5)
     {
@@ -82,6 +84,7 @@ int main(int argc, char *argv[])
         return 1;
     }
 
+    std::ifstream file(argv[1]);
     std::string sudokuStr;
 
     int count = 0;
