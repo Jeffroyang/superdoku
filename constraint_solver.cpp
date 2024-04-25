@@ -286,6 +286,8 @@ void ConstraintSolver::solve()
     cout << *game << endl;
 }
 
+#ifndef MAIN
+#define MAIN
 int main(int argc, char *argv[])
 {
     if (argc != 2)
@@ -298,3 +300,4 @@ int main(int argc, char *argv[])
 
     return 0;
 }
+#endif
