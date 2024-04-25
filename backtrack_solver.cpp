@@ -3,6 +3,8 @@
 
 class BacktrackingSolver : public Solver
 {
+using Solver::Solver;
+
 private:
     bool solveHelper()
     {
@@ -43,10 +45,6 @@ private:
     }
 
 public:
-    BacktrackingSolver() = default;
-
-    BacktrackingSolver(const std::string &filename) : Solver(filename) {}
-
     void solve() override
     {
         if (solveHelper())

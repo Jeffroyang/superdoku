@@ -6,6 +6,8 @@ using namespace std;
 
 class ConstraintSolver : public Solver
 {
+using Solver::Solver;
+
 private:
     array<array<vector<int>, GRID_SIZE>, GRID_SIZE> board;
 
@@ -247,10 +249,6 @@ private:
     }
 
 public:
-    ConstraintSolver() = default;
-
-    ConstraintSolver(const string &filename) : Solver(filename) {}
-
     ConstraintSolver(const ConstraintSolver& other) : board(other.board) {}
 
     void solve() override
