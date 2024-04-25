@@ -1,20 +1,43 @@
 #include "solver.hpp"
 
-Solver::Solver() = default;
+Solver::Solver() : game(std::make_unique<SudokuGame>()) {}
 
-Solver::Solver(const std::string &filename)
+Solver::Solver(const std::string &sudokuStr)
+    : game(std::make_unique<SudokuGame>(sudokuStr))
 {
-    game = std::make_unique<SudokuGame>(filename);
-}
-
-Solver::Solver(Solver &&other)
-{
-    game = std::move(other.game);
 }
 
 Solver::Solver(const Solver &other)
+    : game(other.game ? std::make_unique<SudokuGame>(*other.game) : nullptr)
 {
-    game = std::make_unique<SudokuGame>(*other.game);
 }
 
-Solver::~Solver() = default;
+Solver::Solver(Solver &&other)
+    : game(std::move(other.game))
+{
+}
+
+Solver &Solver::operator=(const Solver &other)
+{
+    if (this != &other)
+    {
+        game = other.game ? std::make_unique<SudokuGame>(*other.game) : nullptr;
+    }
+    return *this;
+}
+
+Solver &Solver::operator=(Solver &&other)
+{
+    if (this != &other)
+    {
+        game = std::move(other.game);
+    }
+    return *this;
+}
+
+SudokuGame Solver::getGame() const
+{
+    return *game;
+}
+
+Solver::~Solver() {}

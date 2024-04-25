@@ -22,7 +22,7 @@ private:
     std::deque<std::pair<std::pair<int, int>, std::pair<int, int>>> get_arcs();
 
     // Given a queue, generate the arc successors with the given start and end coordinates
-    void ac3_successors(std::deque<std::pair<std::pair<int, int>, std::pair<int, int>>>& queue, std::pair<int, int> start, std::pair<int, int> end);
+    void ac3_successors(std::deque<std::pair<std::pair<int, int>, std::pair<int, int>>> &queue, std::pair<int, int> start, std::pair<int, int> end);
 
     // Remove inconsistent arcs, return true if an arc has been removed
     bool remove_inconsistent(std::pair<int, int> cell1, std::pair<int, int> cell2);
@@ -48,12 +48,12 @@ private:
     // Attempt to apply the improved AC-3 Algorithm with backtracking and guessing
     void infer_with_guessing();
 
+    // Initialize the empty grid cells with all possible values
+    void init_board();
+
 public:
     // Constructor for a puzzle from a string
-    ConstraintSolver(const std::string &filename);
-
-    // Constructor for a puzzle from another ConstraintSolver
-    ConstraintSolver(const ConstraintSolver& other);
+    ConstraintSolver(const std::string &sudokuStr);
 
     // Solver copy constructor
     ConstraintSolver(const Solver &other);
@@ -61,6 +61,12 @@ public:
     // Solver move constructor
     ConstraintSolver(Solver &&other);
 
+    // Solver copy assignment operator
+    ConstraintSolver &operator=(const Solver &other);
+
+    // Solver move assignment operator
+    ConstraintSolver &operator=(Solver &&other);
+
     // Run the solver
-    void solve() override;
+    void solve(bool printGame) override;
 };

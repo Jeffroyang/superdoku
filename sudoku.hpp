@@ -31,11 +31,20 @@ public:
     // create empty sudoku game
     SudokuGame();
 
-    // create sudoku game given a file
-    SudokuGame(const std::string &filename);
+    // create sudoku game given a string
+    // format: row 1 || row 2 || ... || row 9
+    SudokuGame(const std::string &);
 
     // loads grid from 2D vector
     SudokuGame(const std::array<std::array<char, GRID_SIZE>, GRID_SIZE> &grid);
+
+    SudokuGame(const SudokuGame &other);
+
+    SudokuGame(SudokuGame &&other);
+
+    SudokuGame &operator=(const SudokuGame &other);
+
+    SudokuGame &operator=(SudokuGame &&other);
 
     // update grid with value at coord
     // returns bool indicating whether the update was successful

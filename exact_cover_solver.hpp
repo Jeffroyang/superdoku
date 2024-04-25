@@ -7,14 +7,18 @@ class ExactCoverSolver : public Solver
 private:
     ExactCover ec;
 
+    void initExactCover();
+
 public:
     ExactCoverSolver(const std::string &filename);
 
-    // Solver copy constructor
     ExactCoverSolver(const Solver &other);
 
-    // Solver move constructor
     ExactCoverSolver(Solver &&other);
 
-    void solve() override;
+    ExactCoverSolver &operator=(const Solver &other);
+
+    ExactCoverSolver &operator=(Solver &&other);
+
+    void solve(bool printGame) override;
 };

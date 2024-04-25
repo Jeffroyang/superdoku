@@ -9,10 +9,16 @@ protected:
 
 public:
     Solver();
-    Solver(const std::string &filename);
+    Solver(const std::string &sudokuStr);
     Solver(Solver &&other);
     Solver(const Solver &other);
 
-    virtual void solve() = 0;
+    Solver &operator=(const Solver &other);
+    Solver &operator=(Solver &&other);
+
+    // returns a copy of the game
+    SudokuGame getGame() const;
+
+    virtual void solve(bool printGame) = 0;
     virtual ~Solver();
 };

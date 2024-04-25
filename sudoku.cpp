@@ -1,6 +1,6 @@
 #include "sudoku.hpp"
-#include <fstream>
 #include <iostream>
+#include <sstream>
 
 SudokuGame::SudokuGame()
 {
@@ -13,34 +13,22 @@ SudokuGame::SudokuGame()
     }
 }
 
-SudokuGame::SudokuGame(const std::string &filename)
+SudokuGame::SudokuGame(const std::string &sudokuStr)
     : SudokuGame()
 {
-    std::ifstream file;
-    file.open(filename, std::ios::in);
-    if (file.fail())
-    {
-        throw std::invalid_argument("Error opening File");
-    }
-
+    std::istringstream sudokuVals(sudokuStr);
     for (size_t row = 0; row < GRID_SIZE; row++)
     {
         for (size_t col = 0; col < GRID_SIZE; col++)
         {
-            if (file.eof())
-            {
-                throw std::invalid_argument("Error reading value from file");
-            }
             char val;
-            file >> val;
+            sudokuVals >> val;
             if (!update(row, col, val))
             {
                 throw std::invalid_argument("Invalid initial grid");
             }
         }
     }
-
-    file.close();
 }
 
 SudokuGame::SudokuGame(const std::array<std::array<char, GRID_SIZE>, GRID_SIZE> &grid)
@@ -55,6 +43,46 @@ SudokuGame::SudokuGame(const std::array<std::array<char, GRID_SIZE>, GRID_SIZE> 
             }
         }
     }
+}
+
+SudokuGame::SudokuGame(const SudokuGame &other)
+{
+    for (size_t row = 0; row < GRID_SIZE; row++)
+    {
+        for (size_t col = 0; col < GRID_SIZE; col++)
+        {
+            grid[row][col] = other.grid[row][col];
+        }
+    }
+}
+
+SudokuGame::SudokuGame(SudokuGame &&other)
+{
+    grid = std::move(other.grid);
+}
+
+SudokuGame &SudokuGame::operator=(const SudokuGame &other)
+{
+    if (this != &other)
+    {
+        for (size_t row = 0; row < GRID_SIZE; row++)
+        {
+            for (size_t col = 0; col < GRID_SIZE; col++)
+            {
+                grid[row][col] = other.grid[row][col];
+            }
+        }
+    }
+    return *this;
+}
+
+SudokuGame &SudokuGame::operator=(SudokuGame &&other)
+{
+    if (this != &other)
+    {
+        grid = std::move(other.grid);
+    }
+    return *this;
 }
 
 void SudokuGame::verifyArgs(int row, int col, char val) const

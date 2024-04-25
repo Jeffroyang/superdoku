@@ -1,4 +1,25 @@
 #include "backtrack_solver.hpp"
+#include <iostream>
+#include <fstream>
+
+BacktrackingSolver::BacktrackingSolver(const std::string &sudokuStr)
+    : Solver(sudokuStr) {}
+
+BacktrackingSolver::BacktrackingSolver(const Solver &other) : Solver(other) {}
+
+BacktrackingSolver::BacktrackingSolver(Solver &&other) : Solver(other) {}
+
+BacktrackingSolver &BacktrackingSolver::operator=(const Solver &other)
+{
+    Solver::operator=(other);
+    return *this;
+}
+
+BacktrackingSolver &BacktrackingSolver::operator=(Solver &&other)
+{
+    Solver::operator=(other);
+    return *this;
+}
 
 bool BacktrackingSolver::solveHelper()
 {
@@ -38,18 +59,21 @@ bool BacktrackingSolver::findEmptyLocation(int &row, int &col) const
     return false;
 }
 
-BacktrackingSolver::BacktrackingSolver(const std::string &filename) {}
-
-BacktrackingSolver::BacktrackingSolver(const Solver &other) : Solver(other) {}
-
-BacktrackingSolver::BacktrackingSolver(Solver &&other) : Solver(other) {}
-
-void BacktrackingSolver::solve()
+void BacktrackingSolver::solve(bool printGame)
 {
+    if (printGame)
+    {
+        std::cout << "Initial game:" << std::endl;
+        std::cout << *game << std::endl;
+    }
+
     if (solveHelper())
     {
         std::cout << "Solution found:" << std::endl;
-        std::cout << *game << std::endl;
+        if (printGame)
+        {
+            std::cout << *game << std::endl;
+        }
     }
     else
     {
@@ -61,14 +85,34 @@ void BacktrackingSolver::solve()
 #define MAIN
 int main(int argc, char *argv[])
 {
-    if (argc != 2)
+    if (argc < 2 || argc >= 4)
     {
-        std::cout << "Usage: " << argv[0] << " <sudoku filename>" << std::endl;
+        std::cout << "Usage: " << argv[0] << " <sudoku filename> [-p]" << std::endl;
     }
 
-    BacktrackingSolver solver(argv[1]);
-    solver.solve();
+    // check for print option
+    bool printGame = false;
+    if (argc == 3)
+    {
+        if (std::string(argv[2]) == "-p")
+        {
+            printGame = true;
+        }
+    }
 
-    return 0;
+    std::fstream file(argv[1]);
+    std::string sudokuStr;
+
+    // each line of the file is a sudoku puzzle
+    std::string line;
+
+    int count = 0;
+    while (std::getline(file, line))
+    {
+        BacktrackingSolver solver(line);
+        solver.solve(printGame);
+        count++;
+        std::cout << "Puzzle #" << count << " solved" << std::endl;
+    }
 }
 #endif
