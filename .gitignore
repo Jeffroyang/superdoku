@@ -3,4 +3,5 @@ backtrack_solver
 constraint_solver
 exact_cover_solver
 main
+benchmark/
 .vscode
