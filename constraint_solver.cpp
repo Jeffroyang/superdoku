@@ -250,6 +250,34 @@ ConstraintSolver::ConstraintSolver(const string &filename) : Solver(filename) {
 
 ConstraintSolver::ConstraintSolver(const ConstraintSolver& other) : board(other.board) {}
 
+ConstraintSolver::ConstraintSolver(const Solver &other) : Solver(other) {
+    for (int row = 0; row < GRID_SIZE; row++) {
+        for (int col = 0; col < GRID_SIZE; col++) {
+            if ((*game)[row][col] == '.') {
+                for (int i = 0; i < GRID_SIZE; i++) {
+                    board[row][col].push_back(i+1);
+                }
+            } else {
+                board[row][col].push_back((*game)[row][col] - '0');
+            }
+        }
+    }
+}
+
+ConstraintSolver::ConstraintSolver(Solver &&other) : Solver(other) {
+    for (int row = 0; row < GRID_SIZE; row++) {
+        for (int col = 0; col < GRID_SIZE; col++) {
+            if ((*game)[row][col] == '.') {
+                for (int i = 0; i < GRID_SIZE; i++) {
+                    board[row][col].push_back(i+1);
+                }
+            } else {
+                board[row][col].push_back((*game)[row][col] - '0');
+            }
+        }
+    }
+}
+
 void ConstraintSolver::solve()
 {
     infer_with_guessing();

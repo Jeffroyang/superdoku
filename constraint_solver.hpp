@@ -55,6 +55,12 @@ public:
     // Constructor for a puzzle from another ConstraintSolver
     ConstraintSolver(const ConstraintSolver& other);
 
+    // Solver copy constructor
+    ConstraintSolver(const Solver &other);
+
+    // Solver move constructor
+    ConstraintSolver(Solver &&other);
+
     // Run the solver
     void solve() override;
 };

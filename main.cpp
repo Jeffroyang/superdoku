@@ -1,5 +1,6 @@
 #include "constraint_solver.hpp"
 #include "backtrack_solver.hpp"
+#include "exact_cover_solver.hpp"
 
 int main(int argc, char *argv[])
 {

@@ -10,5 +10,11 @@ private:
 public:
     ExactCoverSolver(const std::string &filename);
 
+    // Solver copy constructor
+    ExactCoverSolver(const Solver &other);
+
+    // Solver move constructor
+    ExactCoverSolver(Solver &&other);
+
     void solve() override;
 };

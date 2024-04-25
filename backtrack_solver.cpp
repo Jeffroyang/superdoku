@@ -38,7 +38,11 @@ bool BacktrackingSolver::findEmptyLocation(int &row, int &col) const
     return false;
 }
 
-BacktrackingSolver::BacktrackingSolver(const std::string &filename) : Solver(filename) {}
+BacktrackingSolver::BacktrackingSolver(const std::string &filename) {}
+
+BacktrackingSolver::BacktrackingSolver(const Solver &other) : Solver(other) {}
+
+BacktrackingSolver::BacktrackingSolver(Solver &&other) : Solver(other) {}
 
 void BacktrackingSolver::solve()
 {
