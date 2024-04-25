@@ -1,63 +1,57 @@
-#include "solver.h"
-#include <iostream>
+#include "backtrack_solver.hpp"
 
-class BacktrackingSolver : public Solver
+bool BacktrackingSolver::solveHelper()
 {
-private:
-    bool solveHelper()
-    {
-        int row, col;
+    int row, col;
 
-        if (!findEmptyLocation(row, col))
+    if (!findEmptyLocation(row, col))
+    {
+        return true;
+    }
+    for (char num = '1'; num <= '9'; num++)
+    {
+        if (game->update(row, col, num))
         {
-            return true;
-        }
-        for (char num = '1'; num <= '9'; num++)
-        {
-            if (game->update(row, col, num))
+            if (solveHelper())
             {
-                if (solveHelper())
-                {
-                    return true;
-                }
-                game->update(row, col, '.');
+                return true;
+            }
+            game->update(row, col, '.');
+        }
+    }
+
+    return false;
+}
+
+bool BacktrackingSolver::findEmptyLocation(int &row, int &col) const
+{
+    for (row = 0; row < GRID_SIZE; row++)
+    {
+        for (col = 0; col < GRID_SIZE; col++)
+        {
+            if ((*game)[row][col] == '.')
+            {
+                return true;
             }
         }
-
-        return false;
     }
+    return false;
+}
 
-    bool findEmptyLocation(int &row, int &col) const
+BacktrackingSolver::BacktrackingSolver(const std::string &filename) : Solver(filename) {}
+
+void BacktrackingSolver::solve()
+{
+    if (solveHelper())
     {
-        for (row = 0; row < GRID_SIZE; row++)
-        {
-            for (col = 0; col < GRID_SIZE; col++)
-            {
-                if ((*game)[row][col] == '.')
-                {
-                    return true;
-                }
-            }
-        }
-        return false;
+        std::cout << "Solution found:" << std::endl;
+        std::cout << *game << std::endl;
     }
-
-public:
-    BacktrackingSolver(const std::string &filename) : Solver(filename) {}
-
-    void solve() override
+    else
     {
-        if (solveHelper())
-        {
-            std::cout << "Solution found:" << std::endl;
-            std::cout << *game << std::endl;
-        }
-        else
-        {
-            std::cout << "No solution found" << std::endl;
-        }
+        std::cout << "No solution found" << std::endl;
     }
-};
+}
 
 int main(int argc, char *argv[])
 {

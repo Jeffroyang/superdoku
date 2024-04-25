@@ -1,5 +1,5 @@
-#include "constraint_solver.cpp"
-#include "backtrack_solver.cpp"
+#include "constraint_solver.hpp"
+#include "backtrack_solver.hpp"
 
 int main(int argc, char *argv[])
 {

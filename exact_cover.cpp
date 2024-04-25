@@ -1,10 +1,8 @@
-#include "exact_cover.h"
+#include "exact_cover.hpp"
 #include <iostream>
 #include <unordered_set>
 
-ExactCover::Node::Node() : left(this), right(this), up(this), down(this), row(this), column(this), count(0), rowNum(0)
-{
-}
+ExactCover::Node::Node() : left(this), right(this), up(this), down(this), row(this), column(this), count(0), rowNum(0) {}
 
 ExactCover::ExactCover(size_t cols) : root(nullptr), nodes(), rows(), numRows(0), solution(), isSolved(false)
 {

@@ -1,5 +1,4 @@
-
-#include "solver.h"
+#include "solver.hpp"
 
 Solver::Solver() = default;
 
