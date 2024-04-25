@@ -6,8 +6,6 @@ using namespace std;
 
 class ConstraintSolver : public Solver
 {
-using Solver::Solver;
-
 private:
     array<array<vector<int>, GRID_SIZE>, GRID_SIZE> board;
 
@@ -22,20 +20,6 @@ private:
         return true;
     }
 
-    void populate_board() {
-        for (int row = 0; row < GRID_SIZE; row++) {
-            for (int col = 0; col < GRID_SIZE; col++) {
-                if ((*game)[row][col] == '.') {
-                    for (int i = 0; i < GRID_SIZE; i++) {
-                        board[row][col].push_back(i+1);
-                    }
-                } else {
-                    board[row][col].push_back((*game)[row][col] - '0');
-                }
-            }
-        }
-    }
-
     void populate_grid() {
         for (int row = 0; row < GRID_SIZE; row++) {
             for (int col = 0; col < GRID_SIZE; col++) {
@@ -48,6 +32,7 @@ private:
         deque<pair<pair<int, int>, pair<int, int>>> arcs;
         for (int row = 0; row < GRID_SIZE; row++) {
             for (int col = 0; col < GRID_SIZE; col++) {
+                // Create arcs for each 3x3 subgrid
                 for (int i = (row/3)*3; i < (row/3)*3 + 3; i++) {
                     for (int j = (col/3)*3; j < (col/3)*3 + 3; j++) {
                         if (i != row || j != col) {
@@ -57,6 +42,7 @@ private:
                         }
                     }
                 }
+                // Create arcs for each row
                 for (int i = 0; i < GRID_SIZE; i++) {
                     if (i < (row/3)*3 || i >= (row/3)*3 + 3) {
                         if (board[i][col].size() == 1) {
@@ -64,6 +50,7 @@ private:
                         }
                     }
                 }
+                // Create arcs for each column
                 for (int j = 0; j < GRID_SIZE; j++) {
                     if (j < (col/3)*3 || j >= (col/3)*3 + 3) {
                         if (board[row][j].size() == 1) {
@@ -78,6 +65,7 @@ private:
 
     void ac3_successors(deque<pair<pair<int, int>, pair<int, int>>>& queue, pair<int, int> start, pair<int, int> end) {
         int row = start.first, col = start.second;
+        // Create arcs for each 3x3 subgrid
         for (int i = (row/3)*3; i < (row/3)*3 + 3; i++) {
             for (int j = (col/3)*3; j < (col/3)*3 + 3; j++) {
                 if (i != row || j != col) {
@@ -87,6 +75,7 @@ private:
                 }
             }
         }
+        // Create arcs for each row
         for (int i = 0; i < GRID_SIZE; i++) {
             if (i < (row/3)*3 || i >= (row/3)*3 + 3) {
                 if (i != end.first && col != end.second) {
@@ -94,6 +83,7 @@ private:
                 }
             }
         }
+        // Create arcs for each column
         for (int j = 0; j < GRID_SIZE; j++) {
             if (j < (col/3)*3 || j >= (col/3)*3 + 3) {
                 if (row != end.first && j != end.second) {
@@ -132,6 +122,7 @@ private:
 
     bool in_arcs(int value, int row, int col) {
         bool rows = false, cols = false, blocks = false;
+        // Create arcs for each 3x3 subgrid
         for (int i = (row/3)*3; i < (row/3)*3 + 3; i++) {
             for (int j = (col/3)*3; j < (col/3)*3 + 3; j++) {
                 if (i != row || j != col) {
@@ -141,6 +132,7 @@ private:
                 }
             }
         }
+        // Create arcs for each row
         for (int i = 0; i < GRID_SIZE; i++) {
             if (i != row) {
                 if (find(board[i][col].begin(), board[i][col].end(), value) != board[i][col].end()) {
@@ -148,6 +140,7 @@ private:
                 } 
             }
         }
+        // Create arcs for each column
         for (int j = 0; j < GRID_SIZE; j++) {
             if (j != col) {
                 if (find(board[row][j].begin(), board[row][j].end(), value) != board[row][j].end()) {
@@ -249,11 +242,24 @@ private:
     }
 
 public:
+    ConstraintSolver(const string &filename) : Solver(filename) {
+        for (int row = 0; row < GRID_SIZE; row++) {
+            for (int col = 0; col < GRID_SIZE; col++) {
+                if ((*game)[row][col] == '.') {
+                    for (int i = 0; i < GRID_SIZE; i++) {
+                        board[row][col].push_back(i+1);
+                    }
+                } else {
+                    board[row][col].push_back((*game)[row][col] - '0');
+                }
+            }
+        }
+    }
+
     ConstraintSolver(const ConstraintSolver& other) : board(other.board) {}
 
     void solve() override
-    {   
-        populate_board();
+    {
         infer_with_guessing();
         populate_grid();
         std::cout << "Solution found:" << std::endl;
