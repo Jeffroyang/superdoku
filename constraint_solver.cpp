@@ -374,12 +374,16 @@ void ConstraintSolver::solve(bool printGame)
         cout << *game << endl;
     }
     infer_with_guessing();
+    if (!is_solvable())
+    {
+        std::cout << "No solution found" << std::endl;
+    }
     populate_grid();
 
     std::cout << "Solution found:" << std::endl;
     if (printGame)
     {
-        cout << *game << endl;
+        std::cout << *game << std::endl;
     }
 }
 
