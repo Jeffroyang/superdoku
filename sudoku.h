@@ -29,6 +29,9 @@ private:
     bool canPlace(int row, int col, char value) const;
 
 public:
+    // create empty sudoku game
+    SudokuGame();
+
     // create sudoku game given a file
     SudokuGame(const std::string &filename);
 

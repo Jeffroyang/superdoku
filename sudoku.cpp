@@ -2,7 +2,19 @@
 #include <fstream>
 #include <iostream>
 
+SudokuGame::SudokuGame()
+{
+    for (size_t row = 0; row < GRID_SIZE; row++)
+    {
+        for (size_t col = 0; col < GRID_SIZE; col++)
+        {
+            grid[row][col] = '.';
+        }
+    }
+}
+
 SudokuGame::SudokuGame(const std::string &filename)
+    : SudokuGame()
 {
     std::ifstream file;
     file.open(filename, std::ios::in);
