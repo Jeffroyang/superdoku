@@ -8,7 +8,8 @@ The objective of Sudoku is to fill an **9** by **9** grid with digits from 1 to 
 
 ## Usage
 1. Run make to compile the different sudoku solvers and also the main file.
-2. For each of the executables `backtrack_solver`, `constraint_solver`, and `exact_cover_solver`: you can run `./executable <sudoku file> [-p]` to solve the puzzles in each sudoku file. `[-p]` indicates whether or not you want the Sudoku game to be printed.
+2. For each of the executables `backtrack_solver`, `constraint_solver`, and `exact_cover_solver`: 
+    - Run `./executable <sudoku file> [-p]` to solve the puzzles in each sudoku file. `[-p]` indicates whether or not you want the Sudoku game to be printed.
 3. We compiled the main program using `-O3` optimization and you can benchmark the runtime of the different algorithms. main is ran using `./main <sudoku file> <solver_type> [-p]`. Below are some examples:
     - `./main puzzles/easy_list.txt backtrack`
     - `./main puzzles/hard_list.txt constraint`
