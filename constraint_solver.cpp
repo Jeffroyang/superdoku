@@ -377,6 +377,7 @@ void ConstraintSolver::solve(bool printGame)
     if (!is_solvable())
     {
         std::cout << "No solution found" << std::endl;
+        return;
     }
     populate_grid();
 
