@@ -47,7 +47,7 @@ void testConstructors(const std::string &fileName)
 
 int main(int argc, char *argv[])
 {
-    testConstructors(argv[1]);
+    // testConstructors(argv[1]);
 
     if (argc < 3 || argc > 5)
     {
@@ -59,7 +59,7 @@ int main(int argc, char *argv[])
     bool printGame = false;
     if (argc == 4)
     {
-        if (std::string(argv[2]) == "-p")
+        if (std::string(argv[3]) == "-p")
         {
             printGame = true;
         }
