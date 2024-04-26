@@ -33,5 +33,5 @@ Exact cover solver on a single hard puzzle with 17 givens:
 1. Object Oriented Programming: We represent our Sudoku Game, Sudoku Solvers, and Exact Cover as objects.
 2. Class hierarchy: We have an abstract Solver class for Sudoku. The solvers for our 3 different solvers will implement the Solver class and provide their methods for `void solve()`
 3. Standard Template Library (STL): We use arrays and vectors to represent the grids and subgrids in our Sudoku board.
-4. File IO: We will allow users to input Sudoku puzzles using files and output solutions visually in the terminal.
+4. File IO: We allow users to input Sudoku puzzles using files and output solutions visually in the terminal.
 
