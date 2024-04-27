@@ -1,7 +1,7 @@
 # Superdoku
 By Jeffrey Yang (yjeffrey) and Jerry Wang (jwang01)
 
-Our project implements various sudoku solvers in C++, with an exploration of 3 different algorithms. 
+Our project implements various sudoku solvers in C++, with an exploration of 3 different algorithms.  
 
 The objective of Sudoku is to fill an **9** by **9** grid with digits from 1 to **9** such that each row, column, and subgrid contains exactly one occurence of each digit. There are a variety of known techniques for solving Sudoku found [here](https://en.wikipedia.org/wiki/Sudoku_solving_algorithms). We have implemented algorithms for backtracking, ac3, and exact cover solvers.
 
